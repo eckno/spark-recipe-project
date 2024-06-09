@@ -2,6 +2,10 @@ const express = require('express');
 const path = require('path');
 
 const app = express();
+const {MongoClient} = require('mongodb');
+
+const client = new MongoClient("mongodb://localhost:27017/");
+//client.connect()
 const PORT = 3001;
 
 app.use(express.json());
@@ -29,7 +33,10 @@ app.use((err, req, res, next) => {
 
 try {
     app.listen(PORT, () => {
-        console.log('Server is up on port ' + PORT);
+     client.connect((err) => {
+		if(err){console.log(err)}else{console.log("DB connected successfully")}
+	 })
+		console.log('Server is up on port ' + PORT);
     });
 
 } catch (e) {

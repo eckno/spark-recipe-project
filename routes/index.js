@@ -4,7 +4,6 @@ const router = express.Router();
 const recipe = [];
 
 
-
  router.get("/", (req, res) => {
      
      res.render("index", (req, {
