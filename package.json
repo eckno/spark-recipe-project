@@ -1,0 +1,20 @@
+{
+  "name": "spark-recipe-project",
+  "version": "1.0.0",
+  "description": "R\tecipe Management API",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "keywords": [
+    "Recipe"
+  ],
+  "author": "Peace and Chidubem",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "express": "^4.19.2",
+    "nodemon": "^3.1.3"
+  }
+}
