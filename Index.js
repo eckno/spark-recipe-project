@@ -21,7 +21,7 @@ const index_route = require('./routes/index');
 app.use('/', index_route);
 
 
-index.use((err, req, res, next) => {
+app.use((err, req, res, next) => {
 	console.log(err)
 	res.status(err.status || 500).json({ error: 'Internal server error' })
 });
