@@ -1,22 +1,15 @@
-// db.js
+require('dotenv').config();
 const { MongoClient } = require('mongodb');
-require('dotenv').config(); // to use environment variables
 
-const uri = process.env.MONGODB_URI; // MongoDB connection string from environment variables
-let dbInstance;
+const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017/mydatabase';
+let client;
 
 async function connectToDatabase() {
-    if (dbInstance) {
-        return dbInstance;
+    if (!client) {
+        client = new MongoClient(uri);
+        await client.connect();
     }
-
-    const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
-    await client.connect();
-    
-    dbInstance = client.db(); // Use default database specified in connection string
-
-    console.log('Connected to MongoDB');
-    return dbInstance;
+    return client;
 }
 
 module.exports = connectToDatabase;

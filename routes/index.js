@@ -1,22 +1,19 @@
 const express = require('express');
 const router = express.Router();
+const UserController = require("../controller/userController");
 
 const recipe = [];
 
 
  router.get("/", (req, res) => {
-     
      res.render("index", (req, {
          title: "Index Page"
      }));
  });
-
-
  
  router.get('/:id', (req, res) => {
-    
+    //no logic yet
 });
-
 
 router.post('/', async (req, res) => {
     try {
@@ -29,18 +26,18 @@ router.post('/', async (req, res) => {
 });
 
 // Endpoint to update a recipe by ID
-router.put('/:id', async (req, res) => {
-    try {
-        const updatedRecipe = await Recipe.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
-        if (updatedRecipe) {
-            res.json(updatedRecipe);
-        } else {
-            res.status(404).send('Recipe not found');
-        }
-    } catch (err) {
-        res.status(400).send('Bad request');
-    }
-});
+// router.put('/:id', async (req, res) => {
+//     try {
+//         const updatedRecipe = await Recipe.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
+//         if (updatedRecipe) {
+//             res.json(updatedRecipe);
+//         } else {
+//             res.status(404).send('Recipe not found');
+//         }
+//     } catch (err) {
+//         res.status(400).send('Bad request');
+//     }
+// });
 
 // Endpoint to delete a recipe by ID
 router.delete('/:id', async (req, res) => {
@@ -64,6 +61,11 @@ router.get('/popular', async (req, res) => {
     } catch (err) {
         res.status(500).send('Server error');
     }
+});
+
+router.post('/add_new_user', async (req, res) => {
+    const userController = new UserController();
+    return userController.postAddNewUser(req, res);
 });
 
  module.exports = router;
