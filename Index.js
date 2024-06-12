@@ -2,10 +2,9 @@ const express = require('express');
 const path = require('path');
 
 const app = express();
-const {MongoClient} = require('mongodb');
+const connectToDatabase = require('./model/db');
 
-const client = new MongoClient("mongodb://localhost:27017/");
-//client.connect()
+
 const PORT = 3001;
 
 app.use(express.json());
@@ -20,7 +19,6 @@ app.set('view engine', 'ejs');
 
 // Route groups
 const index_route = require('./routes/index');
-
 // Routes Inits
 app.use('/', index_route);
 
@@ -31,18 +29,15 @@ app.use((err, req, res, next) => {
 });
 
 
-try {
-    app.listen(PORT, () => {
-     client.connect((err) => {
-		if(err){console.log(err)}else{console.log("DB connected successfully")}
-	 })
-		console.log('Server is up on port ' + PORT);
-    });
-
-} catch (e) {
-  console.log(e)  
-	setTimeout(() => {
-		process.exit(0)
-	}, 3000)
-}
+(async () => {
+    try {
+        await connectToDatabase(); // Establish database connection
+        app.listen(PORT, () => {
+            console.log(`Server is running on port ${PORT}`);
+        });
+    } catch (error) {
+        console.error('Failed to connect to database', error);
+        process.exit(1);
+    }
+})();
 
