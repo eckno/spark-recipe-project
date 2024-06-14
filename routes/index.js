@@ -63,6 +63,16 @@ router.get('/popular', async (req, res) => {
     }
 });
 
+router.get('/search/:name', async (req, res) => {
+    try {
+        const searchQuery = req.params.name;
+        const recipes = await Recipe.find({ name: { $regex: searchQuery, $options: 'i' } }); // Case-insensitive search
+        res.json(recipes);
+    } catch (err) {
+        res.status(500).send('Server error');
+    }
+});
+
 router.post('/add_new_user', async (req, res) => {
     const userController = new UserController();
     return userController.postAddNewUser(req, res);
