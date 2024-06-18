@@ -68,6 +68,112 @@ class UserController {
             return res.status(400).send(response);
         }
     }
+
+    async recipeSearch(req, res) {
+        const response = {};
+    try {
+        const query = req.query || {};
+        const name = query.name || "";
+
+        if (!name.trim()) {
+            response['success'] = false;
+            response['error_message'] = "Recipe name is required for searching.";
+            return res.status(400).send(response);
+        }
+
+        const db_connect = await DBConnect();
+        const collection = db_connect.db().collection(this.collectionName);
+
+        const recipe = await collection.findOne({ name: name.trim() });
+        if (recipe) {
+            response['success'] = true;
+            response['data'] = recipe;
+            return res.status(200).send(response);
+        }
+
+        response['success'] = false;
+        response['error_message'] = "Recipe not found.";
+        return res.status(404).send(response);
+    } catch (e) {
+        console.log(e);
+        response['success'] = false;
+        response['error_message'] = "Oops! we have encountered an issue, please try again later or contact support";
+        return res.status(500).send(response);
+    }
+    }
+
+    async deleteRecipe(req, res) {
+        const response = {};
+        try {
+            const body = req.body || {};
+            const name = body.name || "";
+    
+            if (!name.trim()) {
+                response['success'] = false;
+                response['error_message'] = "Recipe name is required for deletion.";
+                return res.status(400).send(response);
+            }
+    
+            const db_connect = await DBConnect();
+            const collection = db_connect.db().collection(this.collectionName);
+    
+            const deleteResult = await collection.deleteOne({ name: name.trim() });
+            if (deleteResult.deletedCount > 0) {
+                response['success'] = true;
+                response['message'] = "Recipe deleted successfully.";
+                return res.status(200).send(response);
+            }
+    
+            response['success'] = false;
+            response['error_message'] = "Recipe not found.";
+            return res.status(404).send(response);
+        } catch (e) {
+            console.log(e);
+            response['success'] = false;
+            response['error_message'] = "Oops! we have encountered an issue, please try again later or contact support";
+            return res.status(500).send(response);
+        }
+    }
+
+    async updateRecipe(req, res) {
+        const response = {};
+        try {
+            const body = req.body || {};
+            const recipeId = body.recipeId || "";
+            const updateData = body.updateData || {};
+    
+            if (!recipeId.trim() || Object.keys(updateData).length === 0) {
+                response['success'] = false;
+                response['error_message'] = "Recipe ID and update data are required.";
+                return res.status(400).send(response);
+            }
+    
+            const db_connect = await DBConnect();
+            const collection = db_connect.db().collection(this.collectionName);
+    
+            const updateResult = await collection.updateOne(
+                { _id: new ObjectId(recipeId) },
+                { $set: updateData }
+            );
+    
+            if (updateResult.modifiedCount > 0) {
+                response['success'] = true;
+                response['message'] = "Recipe updated successfully.";
+                return res.status(200).send(response);
+            }
+    
+            response['success'] = false;
+            response['error_message'] = "Failed to update recipe. Recipe not found.";
+            return res.status(404).send(response);
+        } catch (e) {
+            console.log(e);
+            response['success'] = false;
+            response['error_message'] = "Oops! we have encountered an issue, please try again later or contact support";
+            return res.status(500).send(response);
+        }
+    }
+    
+
 }
 
 module.exports = UserController;
