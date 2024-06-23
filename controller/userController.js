@@ -1,5 +1,6 @@
 const DBConnect = require("../model/db");
 const bcrypt = require("bcryptjs");
+//const Recipe = require('../models/Recipe');
 
 class UserController {
 
@@ -69,5 +70,63 @@ class UserController {
         }
     }
 }
+
+
+    //exports.deleteRecipe = async (req, res) => {
+      //  const { recipeId} = req.params;
+
+        //try {
+          //  const deleteRecipe = await Recipe.findByIdAndDelete(recipeId);
+           // if (!deletedRecipe) {
+             //   return res.status(404).json({ message: 'Recipe not found'});
+            //}
+            //res.status(200).json({ message: 'Recipe deleted successfully'});
+        //} catch (error) {
+          //  res.status(500).json({message: 'Server Error', error});
+        //}
+    //};
+
+    ///Edit (update) a recipe
+    //exports.editRecipe = async (req, res) => {
+      //  const {recipeId} = req.params;
+        //const { title, ingredients, instructions } = req.body;
+
+        //try {
+          //  const updatedRecipe = await Recipe.findByIdAndUpdate(
+            //    recipeId,
+              //  { title, ingredients, instrctions },
+                //{ new: true, runValidators: true}
+
+            //);
+            //if (!updatedrecipe) {
+              //  return res.status(404).json({ message: 'Recipe not found'});
+            //}
+            //res.status(200).json(uodatedRecipe);
+        //} catch (error) {
+          //  res.status(500).json({ message:'Server Error', error});
+
+        //}
+
+    //}
+
+//};
+
+///Get a specific recipe (to support editing/viewing a recipe)
+//exports.getRecipe = async (req, res) => {
+  //  const { recipeId } = req.params;
+
+    //try {
+      //  const recipe = await Recipe.findById(recipeId);
+        //if (!recipe) {
+          //  return res.status(404).json({ message: 'Recipe not found'});
+        //}
+        //res.status(200).json(recipe);
+    //} catch (error) {
+      //      res.status(500).json({ message: 'Server Error', error});
+    //}
+//;
+
+
+
 
 module.exports = UserController;
