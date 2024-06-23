@@ -1,5 +1,6 @@
 const DBConnect = require("../model/db");
 const bcrypt = require("bcryptjs");
+const { ObjectId } = require('mongodb');
 
 class RecipeController {
 
@@ -54,6 +55,78 @@ class RecipeController {
             return res.status(400).send(response);
         }
     }
+
+     async deleteRecipe(req, res) {
+        const { recipeId} = req.params;
+ 
+         try {
+
+            const db_connect = await DBConnect();
+            const Recipe = db_connect.db().collection(this.collectionName);
+
+            const deleteRecipe = await Recipe.deleteOne({ _id: new ObjectId(recipeId) });
+            if (deleteRecipe.deletedCount === 0) {
+                return res.status(404).json({ message: 'Recipe not found'});
+             }
+             res.status(200).json({ message: 'Recipe deleted successfully'});
+         } catch (error) {
+            console.log(error);
+            res.status(500).json({message: 'Server Error', error});
+         }
+    };
+
+    ///Edit (update) a recipe
+    async editRecipe(req, res) {        
+        try {
+            const { title, ingredients, instructions, recipeId } = req.body;
+            
+            if (!title.trim() || !ingredients.trim() || !instructions.trim() || !recipeId.trim()){
+                response['success'] = false;
+                response['error_message'] = "Kindly make sure all required fields are correctly filled";
+                return res.status(400).send(response);
+            }
+            
+            const db_connect = await DBConnect();
+            const Recipe = db_connect.db().collection(this.collectionName);
+
+            const updatedRecipe = await Recipe.findOneAndUpdate(
+                { _id: new ObjectId(recipeId) },
+                { $set: { title, ingredients, instructions } },
+                 { returnDocument: 'after', upsert: false}
+             );
+           
+            if (!updatedRecipe) {
+               return res.status(404).json({ message: 'Recipe not found'});
+            }
+            res.status(200).json(updatedRecipe);
+        } catch (error) {
+            console.log(error);
+           res.status(500).json({ message:'Server Error', error});
+
+        }
+    }
+
+    ///Get a specific recipe (to support editing/viewing a recipe)
+ async getRecipe(req, res) {
+   const { recipeId } = req.params;
+
+    try {
+
+        const db_connect = await DBConnect();
+        const Recipe = db_connect.db().collection(this.collectionName);
+
+       const recipe = await Recipe.findOne({ _id: new ObjectId(recipeId) });
+        if (!recipe) {
+           return res.status(404).json({ message: 'Recipe not found'});
+        }
+        res.status(200).json(recipe);
+    } catch (error) {
+        console.log(error);
+           res.status(500).json({ message: 'Server Error', error});
+    }
+
+}
+
 };
 
 

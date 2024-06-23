@@ -14,5 +14,20 @@ router.post('/addrecipe', async (req, res) => {
   return recipeController.postAddNewRecipe(req, res);
 });
 
+router.post('/editrecipe', async (req, res) => {
+  const recipeController = new RecipeController();
+  return recipeController.editRecipe(req, res);
+});
+
+router.get('/deleterecipe/:recipeId', async (req, res) => {
+  const recipeController = new RecipeController();
+  return recipeController.deleteRecipe(req, res);
+});
+
+router.get('/singlerecipe/:recipeId', async (req, res) => {
+  const recipeController = new RecipeController();
+  return recipeController.getRecipe(req, res);
+});
+
 
 module.exports = router;
