@@ -127,6 +127,39 @@ class RecipeController {
 
 }
 
+async recipeSearch(req, res) {
+    const response = {};
+try {
+    const query = req.query || {};
+    const name = query.name || "";
+
+    if (!name.trim()) {
+        response['success'] = false;
+        response['error_message'] = "Recipe name is required for searching.";
+        return res.status(400).send(response);
+    }
+
+    const db_connect = await DBConnect();
+    const collection = db_connect.db().collection(this.collectionName);
+
+    const recipe = await collection.findOne({ name: name.trim() });
+    if (recipe) {
+        response['success'] = true;
+        response['data'] = recipe;
+        return res.status(200).send(response);
+    }
+
+    response['success'] = false;
+    response['error_message'] = "Recipe not found.";
+    return res.status(404).send(response);
+} catch (e) {
+    console.log(e);
+    response['success'] = false;
+    response['error_message'] = "Oops! we have encountered an issue, please try again later or contact support";
+    return res.status(500).send(response);
+}
+}
+
 };
 
 
