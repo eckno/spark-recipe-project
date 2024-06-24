@@ -67,10 +67,7 @@ class UserController {
             response['error_message'] = "Oops! we have encountered an issue, please try again later or contact support";
             return res.status(400).send(response);
         }
-    
+    }
 }
-
-
-
 
 module.exports = UserController;

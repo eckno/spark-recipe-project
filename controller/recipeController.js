@@ -202,6 +202,7 @@ class RecipeController {
         }
     }
 
+}
 
 
-    module.exports = RecipeController;
+module.exports = RecipeController;

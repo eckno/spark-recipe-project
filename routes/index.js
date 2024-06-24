@@ -15,7 +15,7 @@ router.post('/addrecipe', async (req, res) => {
 });
 
 
-router.delete('/deleterecipe', async (req, res) => {
+router.get('/deleterecipe', async (req, res) => {
 const  recipeController = new RecipeController();
 return recipeController.postDeleteRecipe(req, res);
 });
