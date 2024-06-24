@@ -30,5 +30,10 @@ const  recipeController = new RecipeController();
 return recipeController.getRecipe(req, res);
 });
 
+router.get('/search/:key', async (req, res) => {
+    const recipeController = new RecipeController();
+    return recipeController.recipeSearch(req, res);
+     }
+ );
 
 module.exports = router;
