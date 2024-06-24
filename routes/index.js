@@ -24,9 +24,10 @@ router.get('/deleterecipe/:recipeId', async (req, res) => {
   return recipeController.deleteRecipe(req, res);
 });
 
-router.get('/singlerecipe/:recipeId', async (req, res) => {
-  const recipeController = new RecipeController();
-  return recipeController.getRecipe(req, res);
+
+router.get('/recipe/:recipeId', async (req, res) => {
+const  recipeController = new RecipeController();
+return recipeController.getRecipe(req, res);
 });
 
 

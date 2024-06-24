@@ -11,5 +11,6 @@ async function connectToDatabase() {
     }
     return client;
 }
+//module.exports = mongoose.model('Recipe', recipeSchema);
 
 module.exports = connectToDatabase;

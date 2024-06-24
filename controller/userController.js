@@ -32,7 +32,6 @@ class UserController {
 
                     return res.status(400).send(response);
                 }
-
                 /////NOW WE HAVE TO ENCRYPT THE PASSWORD WITH bcrypt LIBRARY LINK: https://www.npmjs.com/package/bcrypt
                 let encrypted_password = "";
                 const hashed_password = await bcrypt.hash(password, Number(process.env.BCRYPTSALT));
