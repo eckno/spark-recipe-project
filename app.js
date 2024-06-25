@@ -13,7 +13,7 @@ const corsOptions = {
     optionsSuccessStatus: 204
 };
 
-const PORT = 3001;
+const PORT = 5001;
 
 app.use(cors(corsOptions));
 
