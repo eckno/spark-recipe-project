@@ -8,15 +8,17 @@ router.get('/', async (req, res) => {
    return res.status(400).send({response: "we are live..."});
 });
 
-router.post('/add_new_user', async (req, res) => {
-   const userController = new UserController();
-    return userController.postAddNewUser(req, res);
-});
 
 router.post('/addrecipe', async (req, res) => {
   const recipeController = new RecipeController();
   return recipeController.postAddNewRecipe(req, res);
 });
+
+router.post('/userlogin', async (req, res) => {
+  const userController = new UserController();
+   return userController.postUserLogin(req, res);
+});
+
 
 router.post('/editrecipe', async (req, res) => {
   const recipeController = new RecipeController();
