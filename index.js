@@ -13,9 +13,9 @@ const corsOptions = {
     optionsSuccessStatus: 204
 };
 
-const PORT = 5001;
+const PORT = 3001;
 
-//app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
