@@ -4,6 +4,10 @@ const UserController = require("../controller/userController");
 const RecipeController = require("../controller/recipeController");
 
 
+router.get('/', async (req, res) => {
+   return res.status(400).send({response: "we are live..."});
+});
+
 router.post('/add_new_user', async (req, res) => {
    const userController = new UserController();
     return userController.postAddNewUser(req, res);
