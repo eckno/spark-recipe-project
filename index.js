@@ -1,21 +1,12 @@
 const express = require('express');
+//const mongoose = require('mongoose);
 const path = require('path');
-const cors = require('cors');
+
 const app = express();
 const connectToDatabase = require('./model/db');
 
 
-// Configure CORS options 
-const corsOptions = {
-    origin: 'http://localhost:4200', // Your frontend's URL
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true,
-    optionsSuccessStatus: 204
-};
-
 const PORT = 3001;
-
-app.use(cors(corsOptions));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
